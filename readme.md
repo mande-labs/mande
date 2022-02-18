@@ -1,6 +1,10 @@
 # mande
 **mande** is a blockchain built using Cosmos SDK and Tendermint and created with [Starport](https://starport.com).
 
+## First time with Blockchain ? 
+
+Follow the [starport tutorial](https://docs.starport.com/guide/) that also has instructions to install starport & it talks about some cool example apps on Blockchain . 
+
 ## Get started
 
 ```
