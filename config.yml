@@ -1,25 +1,16 @@
 accounts:
   - name: alice
-    coins: ["20000mand", "200000000cred"]
+    coins: ["20000token", "200000000stake"]
   - name: bob
-    coins: ["10000mand", "100000000cred"]
-  - name: faucet
-    coins: ["1000000000000mand", "100000000cred"]
+    coins: ["10000token", "100000000stake", "10000000mand"]
 validator:
-  name: bob
-  staked: 2000000cred
+  name: alice
+  staked: "100000000stake"
 client:
   openapi:
     path: "docs/static/openapi.yml"
   vuex:
     path: "vue/src/store"
 faucet:
-  name: faucet
-  coins: ["50000000mand", "1000000cred"]
-  coins_max: ["10000mand", "100cred"]
-genesis:
-  chain_id: "test"
-  app_state:
-    staking:
-      params:
-        bond_denom: "cred"
+  name: bob
+  coins: ["5token", "100000stake", "10000000mand"]
