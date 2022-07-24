@@ -1,0 +1,14 @@
+syntax = "proto3";
+package mandelabs.mande.vote;
+
+option go_package = "github.com/mande-labs/mande/x/vote/types";
+
+message VoteLog {
+  uint64 id = 1;
+  string voter = 2; 
+  string receiver = 3; 
+  uint64 count = 4; 
+  uint64 operation = 5; 
+  uint64 mode = 6; 
+  
+}

@@ -1,0 +1,145 @@
+syntax = "proto3";
+package mandelabs.mande.vote;
+
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "vote/params.proto";
+import "vote/vote_log.proto";
+import "vote/vote_casted.proto";
+import "vote/ballot.proto";
+import "vote/book.proto";
+// this line is used by starport scaffolding # 1
+
+option go_package = "github.com/mande-labs/mande/x/vote/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/mande-labs/mande/vote/params";
+  }
+  // Queries a VoteLog by id.
+	rpc VoteLog(QueryGetVoteLogRequest) returns (QueryGetVoteLogResponse) {
+		option (google.api.http).get = "/mande-labs/mande/vote/vote_log/{id}";
+	}
+
+	// Queries a list of VoteLog items.
+	rpc VoteLogAll(QueryAllVoteLogRequest) returns (QueryAllVoteLogResponse) {
+		option (google.api.http).get = "/mande-labs/mande/vote/vote_log";
+	}
+
+// Queries a VoteCasted by index.
+	rpc VoteCasted(QueryGetVoteCastedRequest) returns (QueryGetVoteCastedResponse) {
+		option (google.api.http).get = "/mande-labs/mande/vote/vote_casted/{index}";
+	}
+
+	// Queries a list of VoteCasted items.
+	rpc VoteCastedAll(QueryAllVoteCastedRequest) returns (QueryAllVoteCastedResponse) {
+		option (google.api.http).get = "/mande-labs/mande/vote/vote_casted";
+	}
+
+// Queries a Ballot by index.
+	rpc Ballot(QueryGetBallotRequest) returns (QueryGetBallotResponse) {
+		option (google.api.http).get = "/mande-labs/mande/vote/ballot/{index}";
+	}
+
+	// Queries a list of Ballot items.
+	rpc BallotAll(QueryAllBallotRequest) returns (QueryAllBallotResponse) {
+		option (google.api.http).get = "/mande-labs/mande/vote/ballot";
+	}
+
+// Queries a Book by index.
+	rpc Book(QueryGetBookRequest) returns (QueryGetBookResponse) {
+		option (google.api.http).get = "/mande-labs/mande/vote/book/{index}";
+	}
+
+	// Queries a list of Book items.
+	rpc BookAll(QueryAllBookRequest) returns (QueryAllBookResponse) {
+		option (google.api.http).get = "/mande-labs/mande/vote/book";
+	}
+
+// this line is used by starport scaffolding # 2
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetVoteLogRequest {
+	uint64 id = 1;
+}
+
+message QueryGetVoteLogResponse {
+	VoteLog VoteLog = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllVoteLogRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllVoteLogResponse {
+	repeated VoteLog VoteLog = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetVoteCastedRequest {
+	  string index = 1;
+
+}
+
+message QueryGetVoteCastedResponse {
+	VoteCasted voteCasted = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllVoteCastedRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllVoteCastedResponse {
+	repeated VoteCasted voteCasted = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetBallotRequest {
+	  string index = 1;
+
+}
+
+message QueryGetBallotResponse {
+	Ballot ballot = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllBallotRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllBallotResponse {
+	repeated Ballot ballot = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetBookRequest {
+	  string index = 1;
+
+}
+
+message QueryGetBookResponse {
+	Book book = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllBookRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllBookResponse {
+	repeated Book book = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+// this line is used by starport scaffolding # 3
