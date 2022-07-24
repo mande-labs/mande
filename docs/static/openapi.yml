@@ -29537,6 +29537,745 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
+  /mande-labs/mande/vote/ballot:
+    get:
+      summary: Queries a list of Ballot items.
+      operationId: MandelabsMandeVoteBallotAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              ballot:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    index:
+                      type: string
+                    count:
+                      type: string
+                      format: uint64
+                    sign:
+                      type: string
+                      format: uint64
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/mande-labs/mande/vote/ballot/{index}':
+    get:
+      summary: Queries a Ballot by index.
+      operationId: MandelabsMandeVoteBallot
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              ballot:
+                type: object
+                properties:
+                  index:
+                    type: string
+                  count:
+                    type: string
+                    format: uint64
+                  sign:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: index
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /mande-labs/mande/vote/book:
+    get:
+      summary: Queries a list of Book items.
+      operationId: MandelabsMandeVoteBookAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              book:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    index:
+                      type: string
+                    positive:
+                      type: string
+                      format: uint64
+                    negative:
+                      type: string
+                      format: uint64
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/mande-labs/mande/vote/book/{index}':
+    get:
+      summary: Queries a Book by index.
+      operationId: MandelabsMandeVoteBook
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              book:
+                type: object
+                properties:
+                  index:
+                    type: string
+                  positive:
+                    type: string
+                    format: uint64
+                  negative:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: index
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /mande-labs/mande/vote/params:
+    get:
+      summary: Parameters queries the parameters of the module.
+      operationId: MandelabsMandeVoteParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params holds all the parameters of this module.
+                type: object
+            description: >-
+              QueryParamsResponse is response type for the Query/Params RPC
+              method.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
+  /mande-labs/mande/vote/vote_casted:
+    get:
+      summary: Queries a list of VoteCasted items.
+      operationId: MandelabsMandeVoteVoteCastedAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              voteCasted:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    index:
+                      type: string
+                    count:
+                      type: string
+                      format: uint64
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/mande-labs/mande/vote/vote_casted/{index}':
+    get:
+      summary: Queries a VoteCasted by index.
+      operationId: MandelabsMandeVoteVoteCasted
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              voteCasted:
+                type: object
+                properties:
+                  index:
+                    type: string
+                  count:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: index
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
+  /mande-labs/mande/vote/vote_log:
+    get:
+      summary: Queries a list of VoteLog items.
+      operationId: MandelabsMandeVoteVoteLogAll
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              VoteLog:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uint64
+                    voter:
+                      type: string
+                    receiver:
+                      type: string
+                    count:
+                      type: string
+                      format: uint64
+                    operation:
+                      type: string
+                      format: uint64
+                    mode:
+                      type: string
+                      format: uint64
+              pagination:
+                type: object
+                properties:
+                  next_key:
+                    type: string
+                    format: byte
+                    title: |-
+                      next_key is the key to be passed to PageRequest.key to
+                      query the next page most efficiently
+                  total:
+                    type: string
+                    format: uint64
+                    title: >-
+                      total is total number of results available if
+                      PageRequest.count_total
+
+                      was set, its value is undefined otherwise
+                description: >-
+                  PageResponse is to be embedded in gRPC response messages where
+                  the
+
+                  corresponding request message has used PageRequest.
+
+                   message SomeResponse {
+                           repeated Bar results = 1;
+                           PageResponse page = 2;
+                   }
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: pagination.key
+          description: |-
+            key is a value returned in PageResponse.next_key to begin
+            querying the next page most efficiently. Only one of offset or key
+            should be set.
+          in: query
+          required: false
+          type: string
+          format: byte
+        - name: pagination.offset
+          description: >-
+            offset is a numeric offset that can be used when key is unavailable.
+
+            It is less efficient than using key. Only one of offset or key
+            should
+
+            be set.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.limit
+          description: >-
+            limit is the total number of results to be returned in the result
+            page.
+
+            If left empty it will default to a value to be set by each app.
+          in: query
+          required: false
+          type: string
+          format: uint64
+        - name: pagination.count_total
+          description: >-
+            count_total is set to true  to indicate that the result set should
+            include
+
+            a count of the total number of items available for pagination in
+            UIs.
+
+            count_total is only respected when offset is used. It is ignored
+            when key
+
+            is set.
+          in: query
+          required: false
+          type: boolean
+        - name: pagination.reverse
+          description: >-
+            reverse is set to true if results are to be returned in the
+            descending order.
+
+
+            Since: cosmos-sdk 0.43
+          in: query
+          required: false
+          type: boolean
+      tags:
+        - Query
+  '/mande-labs/mande/vote/vote_log/{id}':
+    get:
+      summary: Queries a VoteLog by id.
+      operationId: MandelabsMandeVoteVoteLog
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              VoteLog:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uint64
+                  voter:
+                    type: string
+                  receiver:
+                    type: string
+                  count:
+                    type: string
+                    format: uint64
+                  operation:
+                    type: string
+                    format: uint64
+                  mode:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
   /tendermint/spn/monitoringp/connection_channel_id:
     get:
       summary: Queries a ConnectionChannelID by index.
@@ -50698,6 +51437,297 @@ definitions:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
+  mandelabs.mande.vote.Ballot:
+    type: object
+    properties:
+      index:
+        type: string
+      count:
+        type: string
+        format: uint64
+      sign:
+        type: string
+        format: uint64
+  mandelabs.mande.vote.Book:
+    type: object
+    properties:
+      index:
+        type: string
+      positive:
+        type: string
+        format: uint64
+      negative:
+        type: string
+        format: uint64
+  mandelabs.mande.vote.MsgCreateVoteResponse:
+    type: object
+  mandelabs.mande.vote.Params:
+    type: object
+    description: Params defines the parameters for the module.
+  mandelabs.mande.vote.QueryAllBallotResponse:
+    type: object
+    properties:
+      ballot:
+        type: array
+        items:
+          type: object
+          properties:
+            index:
+              type: string
+            count:
+              type: string
+              format: uint64
+            sign:
+              type: string
+              format: uint64
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  mandelabs.mande.vote.QueryAllBookResponse:
+    type: object
+    properties:
+      book:
+        type: array
+        items:
+          type: object
+          properties:
+            index:
+              type: string
+            positive:
+              type: string
+              format: uint64
+            negative:
+              type: string
+              format: uint64
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  mandelabs.mande.vote.QueryAllVoteCastedResponse:
+    type: object
+    properties:
+      voteCasted:
+        type: array
+        items:
+          type: object
+          properties:
+            index:
+              type: string
+            count:
+              type: string
+              format: uint64
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  mandelabs.mande.vote.QueryAllVoteLogResponse:
+    type: object
+    properties:
+      VoteLog:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uint64
+            voter:
+              type: string
+            receiver:
+              type: string
+            count:
+              type: string
+              format: uint64
+            operation:
+              type: string
+              format: uint64
+            mode:
+              type: string
+              format: uint64
+      pagination:
+        type: object
+        properties:
+          next_key:
+            type: string
+            format: byte
+            title: |-
+              next_key is the key to be passed to PageRequest.key to
+              query the next page most efficiently
+          total:
+            type: string
+            format: uint64
+            title: >-
+              total is total number of results available if
+              PageRequest.count_total
+
+              was set, its value is undefined otherwise
+        description: |-
+          PageResponse is to be embedded in gRPC response messages where the
+          corresponding request message has used PageRequest.
+
+           message SomeResponse {
+                   repeated Bar results = 1;
+                   PageResponse page = 2;
+           }
+  mandelabs.mande.vote.QueryGetBallotResponse:
+    type: object
+    properties:
+      ballot:
+        type: object
+        properties:
+          index:
+            type: string
+          count:
+            type: string
+            format: uint64
+          sign:
+            type: string
+            format: uint64
+  mandelabs.mande.vote.QueryGetBookResponse:
+    type: object
+    properties:
+      book:
+        type: object
+        properties:
+          index:
+            type: string
+          positive:
+            type: string
+            format: uint64
+          negative:
+            type: string
+            format: uint64
+  mandelabs.mande.vote.QueryGetVoteCastedResponse:
+    type: object
+    properties:
+      voteCasted:
+        type: object
+        properties:
+          index:
+            type: string
+          count:
+            type: string
+            format: uint64
+  mandelabs.mande.vote.QueryGetVoteLogResponse:
+    type: object
+    properties:
+      VoteLog:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uint64
+          voter:
+            type: string
+          receiver:
+            type: string
+          count:
+            type: string
+            format: uint64
+          operation:
+            type: string
+            format: uint64
+          mode:
+            type: string
+            format: uint64
+  mandelabs.mande.vote.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
+  mandelabs.mande.vote.VoteCasted:
+    type: object
+    properties:
+      index:
+        type: string
+      count:
+        type: string
+        format: uint64
+  mandelabs.mande.vote.VoteLog:
+    type: object
+    properties:
+      id:
+        type: string
+        format: uint64
+      voter:
+        type: string
+      receiver:
+        type: string
+      count:
+        type: string
+        format: uint64
+      operation:
+        type: string
+        format: uint64
+      mode:
+        type: string
+        format: uint64
   tendermint.spn.monitoringp.ConnectionChannelID:
     type: object
     properties:

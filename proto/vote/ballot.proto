@@ -1,0 +1,12 @@
+syntax = "proto3";
+package mandelabs.mande.vote;
+
+option go_package = "github.com/mande-labs/mande/x/vote/types";
+
+message Ballot {
+  string index = 1; 
+  uint64 count = 2; 
+  uint64 sign = 3; 
+  
+}
+

@@ -1,0 +1,23 @@
+syntax = "proto3";
+package mandelabs.mande.vote;
+
+import "gogoproto/gogo.proto";
+import "vote/params.proto";
+import "vote/vote_log.proto";
+import "vote/vote_casted.proto";
+import "vote/ballot.proto";
+import "vote/book.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/mande-labs/mande/x/vote/types";
+
+// GenesisState defines the vote module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  repeated VoteLog voteLogList = 2 [(gogoproto.nullable) = false];
+  uint64 voteLogCount = 3;
+  repeated VoteCasted voteCastedList = 4 [(gogoproto.nullable) = false];
+  repeated Ballot ballotList = 5 [(gogoproto.nullable) = false];
+  repeated Book bookList = 6 [(gogoproto.nullable) = false];
+  // this line is used by starport scaffolding # genesis/proto/state
+}

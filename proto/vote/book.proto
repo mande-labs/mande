@@ -1,0 +1,12 @@
+syntax = "proto3";
+package mandelabs.mande.vote;
+
+option go_package = "github.com/mande-labs/mande/x/vote/types";
+
+message Book {
+  string index = 1; 
+  uint64 positive = 2; 
+  uint64 negative = 3; 
+  
+}
+

@@ -103,6 +103,9 @@ import (
 	mandemodule "github.com/mande-labs/mande/x/mande"
 	mandemodulekeeper "github.com/mande-labs/mande/x/mande/keeper"
 	mandemoduletypes "github.com/mande-labs/mande/x/mande/types"
+	votemodule "github.com/mande-labs/mande/x/vote"
+	votemodulekeeper "github.com/mande-labs/mande/x/vote/keeper"
+	votemoduletypes "github.com/mande-labs/mande/x/vote/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 
@@ -158,6 +161,7 @@ var (
 		vesting.AppModuleBasic{},
 		monitoringp.AppModuleBasic{},
 		mandemodule.AppModuleBasic{},
+		votemodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
 
@@ -170,6 +174,7 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		votemoduletypes.ModuleName:     {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -231,6 +236,8 @@ type App struct {
 	ScopedMonitoringKeeper capabilitykeeper.ScopedKeeper
 
 	MandeKeeper mandemodulekeeper.Keeper
+
+	VoteKeeper votemodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// mm is the module manager
@@ -268,6 +275,7 @@ func New(
 		govtypes.StoreKey, paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey, feegrant.StoreKey,
 		evidencetypes.StoreKey, ibctransfertypes.StoreKey, capabilitytypes.StoreKey, monitoringptypes.StoreKey,
 		mandemoduletypes.StoreKey,
+		votemoduletypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -394,6 +402,17 @@ func New(
 	)
 	mandeModule := mandemodule.NewAppModule(appCodec, app.MandeKeeper, app.AccountKeeper, app.BankKeeper)
 
+	app.VoteKeeper = *votemodulekeeper.NewKeeper(
+		appCodec,
+		keys[votemoduletypes.StoreKey],
+		keys[votemoduletypes.MemStoreKey],
+		app.GetSubspace(votemoduletypes.ModuleName),
+
+		app.BankKeeper,
+		app.StakingKeeper,
+	)
+	voteModule := votemodule.NewAppModule(appCodec, app.VoteKeeper, app.AccountKeeper, app.BankKeeper)
+
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
 	// Create static IBC router, add transfer route, then set and seal it
@@ -436,6 +455,7 @@ func New(
 		transferModule,
 		monitoringModule,
 		mandeModule,
+		voteModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -464,6 +484,7 @@ func New(
 		paramstypes.ModuleName,
 		monitoringptypes.ModuleName,
 		mandemoduletypes.ModuleName,
+		votemoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
 
@@ -488,6 +509,7 @@ func New(
 		ibctransfertypes.ModuleName,
 		monitoringptypes.ModuleName,
 		mandemoduletypes.ModuleName,
+		votemoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
 
@@ -517,6 +539,7 @@ func New(
 		feegrant.ModuleName,
 		monitoringptypes.ModuleName,
 		mandemoduletypes.ModuleName,
+		votemoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	)
 
@@ -542,6 +565,7 @@ func New(
 		transferModule,
 		monitoringModule,
 		mandeModule,
+		voteModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 	app.sm.RegisterStoreDecoders()
@@ -732,6 +756,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	paramsKeeper.Subspace(monitoringptypes.ModuleName)
 	paramsKeeper.Subspace(mandemoduletypes.ModuleName)
+	paramsKeeper.Subspace(votemoduletypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper
